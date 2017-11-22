@@ -57,11 +57,11 @@ You will need the values from the OIDC client that you created in the previous s
 In your application's `App.js` file, import the following objects and pass in your configuration:
 
 ```typescript
-import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
+import { Security, ImplicitCallback } from '@okta/okta-react';
 
 const config = {
   issuer: 'https://{yourOktaDomain}.com/oauth2/default',
-  redirectUri: window.location.origin + '/implicit/callback',
+  redirect_uri: window.location.origin + '/implicit/callback',
   clientId: '{clientId}'
 }
 
@@ -79,10 +79,9 @@ You'll need to provide these routes in your sample application, so that we can s
 In the relevant location in your application, you will want to provide `Login` and `Logout` buttons for the user. You can show/hide the correct button by using the `auth.isAuthenticated()` method. For example:
 
 ```typescript
-/// src/Home.js
+// src/Home.js
 
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { withAuth } from '@okta/okta-react';
 
 export default withAuth(class Home extends Component {
@@ -120,7 +119,7 @@ Finally, passing in your configuration into `Security`, and connect your applica
 ```typescript
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
+import { Security, ImplicitCallback } from '@okta/okta-react';
 import Home from './Home';
 
 const config = {
@@ -134,7 +133,7 @@ class App extends Component {
     return (
       <Router>
         <Security issuer={config.issuer}
-                  client_id={config.clientId}
+                  client_id={config.client_id}
                   redirect_uri={config.redirect_uri} >
           <Route path='/' exact={true} component={Home}/>
           <Route path='/implicit/callback' component={ImplicitCallback} />
@@ -168,7 +167,7 @@ export default withAuth(class MessageList extends Component {
 
   async componentDidMount() {
     try {
-      const response = await fetch('http://localhost:{serverPort}/api/messages', {
+      const response = await fetch('http://localhost:{port}/api/messages', {
         headers: {
           Authorization: 'Bearer ' + await this.props.auth.getAccessToken()
         }
