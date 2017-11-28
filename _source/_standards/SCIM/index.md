@@ -497,7 +497,7 @@ of the [SCIM 2.0 Protocol Specification](https://tools.ietf.org/html/rfc7644).
 
 ##### Deactivate Account: PATCH /Users/{id}
 
-Deprovisioning is perhaps the most important reason customers why
+Deprovisioning is perhaps the most important reason why
 customers ask that your application supports provisioning
 with Okta. Your SCIM API should support account deactivation via a
 PATCH to `/Users/{id}` where the payload of the PATCH request sets
